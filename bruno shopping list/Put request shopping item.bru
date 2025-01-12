@@ -1,0 +1,18 @@
+meta {
+  name: Put request shopping item
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:5000/api/shoppingItems/3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+   
+    "name": "Tomate"
+  }
+}

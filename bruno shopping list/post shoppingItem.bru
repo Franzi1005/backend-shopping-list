@@ -1,0 +1,17 @@
+meta {
+  name: post shoppingItem
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:5000/api/shoppingItems
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Milch"
+  }
+}
