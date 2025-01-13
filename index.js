@@ -57,9 +57,7 @@ app.put('/api/shoppingItems/:id', async (req, res) => {
     req.body.amount,
     req.body.bought
   )
-  // shoppingItem.name = req.body.name
-  // shoppingItem.amount = req.body.amount
-  // shoppingItem.bought = req.body.bought
+
   res.send(updatedShoppingItem)
 })
 
