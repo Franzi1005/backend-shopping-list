@@ -28,10 +28,10 @@ export async function createShoppingItem(id, name, amount) {
   return result
 }
 
-export async function updateShoppingItem(id, name, amount) {
+export async function updateShoppingItem(id, name, amount, bought) {
   const result = await db.query(
-    'UPDATE shopping_items SET name = ?, amount = ? WHERE item_id = ?',
-    [name, amount, id]
+    'UPDATE shopping_items SET name = ?, amount = ?, bought = ? WHERE item_id = ?',
+    [name, amount, bought, id]
   )
   return result
 }
@@ -40,6 +40,14 @@ export async function deleteShoppingItem(id) {
   const result = await db.query(
     'DELETE FROM shopping_items WHERE item_id = ?',
     [id]
+  )
+  return result
+}
+
+export async function createUser(id, name, password) {
+  const result = await db.query(
+    'INSERT INTO users (user_id, user_name, password) VALUES(?, ?, ?)',
+    [id, name, password]
   )
   return result
 }
