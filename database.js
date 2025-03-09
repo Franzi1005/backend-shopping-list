@@ -16,7 +16,9 @@ const db = mysql2
   .promise()
 
 export async function getShoppingItems() {
-  const [rows] = await db.query('SELECT * FROM shopping_items')
+  const [rows] = await db.query(
+    'SELECT * FROM shopping_items ORDER BY bought, name'
+  )
   return rows
 }
 

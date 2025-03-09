@@ -46,8 +46,8 @@ router.put('/:id', async (req, res) => {
   if (result.error) return res.status(400).send(result.error.details[0].message)
   const updatedShoppingItem = await updateShoppingItem(
     req.params.id,
-    req.body.name || shoppingItem.body.name,
-    req.body.amount || shoppingItem.body.amount,
+    req.body.name || shoppingItem.name,
+    req.body.amount || shoppingItem.amount,
     req.body.bought
   )
   res.send(updatedShoppingItem)
