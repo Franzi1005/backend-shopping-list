@@ -46,10 +46,20 @@ export async function deleteShoppingItem(id) {
   return result
 }
 
-export async function createUser(id, name, password) {
-  const result = await db.query(
-    'INSERT INTO users (user_id, user_name, password) VALUES(?, ?, ?)',
-    [id, name, password]
-  )
-  return result
+export async function createUser(name, password, email) {
+  const user = await getUserByEmail(email)
+  if (user) {
+    throw new Error('Email already in use!')
+  } else {
+    const result = await db.query(
+      'INSERT INTO users (user_name, password, email) VALUES(?, ?, ?)',
+      [name, password, email]
+    )
+    return result
+  }
+}
+
+async function getUserByEmail(email) {
+  const user = await db.query('SELECT * FROM users WHERE email = ?', [email])
+  return user[0].length > 0 ? user[0] : null
 }

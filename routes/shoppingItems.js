@@ -1,6 +1,5 @@
 import express from 'express'
 const router = express.Router()
-//router.use(express.json())
 
 import Joi from 'joi'
 import { v4 as uuidv4 } from 'uuid'
