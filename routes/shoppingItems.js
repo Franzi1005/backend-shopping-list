@@ -27,9 +27,6 @@ router.get('/', auth, async (req, res) => {
 })
 
 router.post('/', auth, async (req, res) => {
-  const token = req.header('x-auth-token')
-  res.status(401)
-
   const result = validateShoppingItem(req.body)
   if (result.error) return res.status(400).send(result.error.details[0].message)
   const { item_id = uuidv4(), name, amount } = req.body

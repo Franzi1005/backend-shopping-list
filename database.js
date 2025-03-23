@@ -15,6 +15,7 @@ const db = mysql2
   })
   .promise()
 
+// Shopping Items
 export async function getShoppingItems() {
   const [rows] = await db.query(
     'SELECT * FROM shopping_items ORDER BY bought, name'
@@ -46,6 +47,7 @@ export async function deleteShoppingItem(id) {
   return result
 }
 
+// Users
 export async function createUser(name, password, email) {
   const user = await getUserByEmail(email)
   if (user) {
@@ -62,4 +64,33 @@ export async function createUser(name, password, email) {
 export async function getUserByEmail(email) {
   const user = await db.query('SELECT * FROM users WHERE email = ?', [email])
   return user[0].length > 0 ? user[0] : null
+}
+
+// Shopping lists
+export async function getShoppingLists(params) {
+  // TODO: impelement logic
+  const [rows] = await db.query(
+    'SELECT * FROM shopping_lists' // WHERE user_id = ??
+  )
+  return rows
+}
+
+export async function createShoppingList(name) {
+  // TODO: impelement logic
+  const result = await db.query('INSERT iNTO shopping_lists (name) VALUES(?)', [
+    name,
+  ])
+  return result
+}
+
+export async function updateShoppingList(params) {
+  // TODO: impelement logic
+}
+
+export async function deleteShoppingList(id) {
+  const result = await db.query(
+    'DELETE FROM shopping_lists WHERE item_id = ?',
+    [id]
+  )
+  return result
 }
