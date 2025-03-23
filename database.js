@@ -66,30 +66,46 @@ export async function getUserByEmail(email) {
   return user[0].length > 0 ? user[0] : null
 }
 
+export async function getUser(id) {
+  const user = await db.query('SELECT * FROM users WHERE user_id = ?', [id])
+  return user[0].length > 0 ? user[0] : null
+}
+
 // Shopping lists
-export async function getShoppingLists(params) {
+export async function getShoppingList(id) {
   // TODO: impelement logic
   const [rows] = await db.query(
-    'SELECT * FROM shopping_lists' // WHERE user_id = ??
+    'SELECT * FROM shopping_lists where shopping_list_id = ?',
+    [id] // WHERE user_id = ??
   )
   return rows
 }
 
-export async function createShoppingList(name) {
-  // TODO: impelement logic
-  const result = await db.query('INSERT iNTO shopping_lists (name) VALUES(?)', [
-    name,
-  ])
+export async function getShoppingLists() {
+  const [rows] = await db.query('SELECT * FROM shopping_lists')
+  return rows
+}
+
+export async function createShoppingList(name, user_id) {
+  // TODO: figure out how to get the user in there
+  const result = await db.query(
+    'INSERT iNTO shopping_lists (sl_name, user_id) VALUES(?, ?)',
+    [name, user_id]
+  )
   return result
 }
 
-export async function updateShoppingList(params) {
-  // TODO: impelement logic
+export async function updateShoppingList(name, shopping_list_id) {
+  const result = await db.query(
+    'UPDATE shopping_lists SET sl_name = ? WHERE shopping_list_id = ?',
+    [name, shopping_list_id]
+  )
+  return result
 }
 
 export async function deleteShoppingList(id) {
   const result = await db.query(
-    'DELETE FROM shopping_lists WHERE item_id = ?',
+    'DELETE FROM shopping_lists WHERE shopping_list_id = ?',
     [id]
   )
   return result

@@ -1,10 +1,11 @@
 import express from 'express'
 const router = express.Router()
 import Joi from 'joi'
-import { createUser } from '../database.js'
+import { createUser, getUser } from '../database.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import auth from '../middleware/auth.js'
 
 dotenv.config()
 
@@ -17,6 +18,11 @@ function validateUser(user) {
   const result = schema.validate(user)
   return result
 }
+
+router.get('/me', auth, async (req, res) => {
+  const user = await getUser(req.user.user_id)
+  res.send(user)
+})
 
 router.post('/', async (req, res) => {
   const result = validateUser(req.body)
