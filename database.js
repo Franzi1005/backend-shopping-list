@@ -59,7 +59,7 @@ export async function createUser(name, password, email) {
   }
 }
 
-async function getUserByEmail(email) {
+export async function getUserByEmail(email) {
   const user = await db.query('SELECT * FROM users WHERE email = ?', [email])
   return user[0].length > 0 ? user[0] : null
 }

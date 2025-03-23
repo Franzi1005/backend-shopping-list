@@ -3,6 +3,10 @@ const router = express.Router()
 import Joi from 'joi'
 import { createUser } from '../database.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 function validateUser(user) {
   const schema = Joi.object({
@@ -17,7 +21,6 @@ function validateUser(user) {
 router.post('/', async (req, res) => {
   const result = validateUser(req.body)
   if (result.error) return res.status(400).send(result.error.details[0].message)
-  // TODO : check if user already exists
 
   const { userName, password, email } = req.body
 
@@ -26,7 +29,11 @@ router.post('/', async (req, res) => {
 
   try {
     const newUser = await createUser(userName, hashedPassword, email)
-    res.status(201).send(newUser)
+    const token = jwt.sign(
+      { userId: newUser[0].user_id },
+      process.env.JWT_SECRET
+    )
+    res.header('x-auth-token', token).status(201).send(newUser)
   } catch (error) {
     res.status(400).send(error.message)
   }

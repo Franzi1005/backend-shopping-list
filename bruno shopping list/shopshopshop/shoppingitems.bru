@@ -1,0 +1,20 @@
+meta {
+  name: shoppingitems
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:5000/api/shoppingItems
+  body: json
+  auth: none
+}
+
+headers {
+  x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDI3MjcwODF9.pWPzJzTZPwvCdQ26DOCIJCBT6bo1tsmMh83DRDAorFE
+}
+
+body:json {
+  {"name": "cacti",
+  "amount": 3}
+}

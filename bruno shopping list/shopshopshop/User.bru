@@ -1,0 +1,17 @@
+meta {
+  name: User
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:5000/api/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {"email": "apple@salz.com",
+  "password": "franzi", 
+  "userName": "Pfeffer"}
+}

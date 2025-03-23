@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-
+import auth from '../middleware/auth.js'
 import Joi from 'joi'
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -21,12 +21,15 @@ function validateShoppingItem(shoppingItem) {
   return result
 }
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   const shoppingItems = await getShoppingItems()
   res.send(shoppingItems)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
+  const token = req.header('x-auth-token')
+  res.status(401)
+
   const result = validateShoppingItem(req.body)
   if (result.error) return res.status(400).send(result.error.details[0].message)
   const { item_id = uuidv4(), name, amount } = req.body
@@ -34,7 +37,7 @@ router.post('/', async (req, res) => {
   res.status(201).send(shoppingItem)
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   const shoppingItems = await getShoppingItems()
   const shoppingItem = shoppingItems.find(
     (item) => item.item_id === req.params.id
@@ -52,7 +55,7 @@ router.put('/:id', async (req, res) => {
   res.send(updatedShoppingItem)
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   const shoppingItems = await getShoppingItems()
   const shoppingItem = shoppingItems.find(
     (item) => item.item_id === req.params.id
