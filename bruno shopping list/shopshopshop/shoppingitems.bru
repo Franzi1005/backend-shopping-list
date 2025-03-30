@@ -4,8 +4,8 @@ meta {
   seq: 4
 }
 
-post {
-  url: http://localhost:5000/api/shoppingItems
+put {
+  url: http://localhost:5000/api/shoppingItems/1224145
   body: json
   auth: none
 }
@@ -15,6 +15,7 @@ headers {
 }
 
 body:json {
-  {"name": "cacti",
-  "amount": 3}
+  {"name": "Muffins",
+   "shopping_list_id": 12
+  }
 }

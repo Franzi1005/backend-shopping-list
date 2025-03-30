@@ -16,17 +16,18 @@ const db = mysql2
   .promise()
 
 // Shopping Items
-export async function getShoppingItems() {
+export async function getShoppingItems(shopping_list_id) {
   const [rows] = await db.query(
-    'SELECT * FROM shopping_items ORDER BY bought, name'
+    'SELECT * FROM shopping_items WHERE shopping_list_id = ? ORDER BY bought, name',
+    [shopping_list_id]
   )
   return rows
 }
 
-export async function createShoppingItem(id, name, amount) {
+export async function createShoppingItem(id, name, amount, shopping_list_id) {
   const result = await db.query(
-    'INSERT iNTO shopping_items (item_id, name, amount) VALUES(?, ?, ?)',
-    [id, name, amount]
+    'INSERT INTO shopping_items (item_id, name, amount, shopping_list_id) VALUES(?, ?, ?, ?)',
+    [id, name, amount, shopping_list_id]
   )
   return result
 }
@@ -72,24 +73,26 @@ export async function getUser(id) {
 }
 
 // Shopping lists
-export async function getShoppingList(id) {
-  // TODO: impelement logic
+export async function getShoppingList(id, user_id) {
   const [rows] = await db.query(
-    'SELECT * FROM shopping_lists where shopping_list_id = ?',
-    [id] // WHERE user_id = ??
+    'SELECT * FROM shopping_lists WHERE shopping_list_id = ? AND user_id = ?',
+    [id, user_id]
   )
   return rows
 }
 
-export async function getShoppingLists() {
-  const [rows] = await db.query('SELECT * FROM shopping_lists')
+export async function getShoppingLists(user_id) {
+  const [rows] = await db.query(
+    'SELECT * FROM shopping_lists WHERE user_id = ?',
+    [user_id]
+  )
   return rows
 }
 
 export async function createShoppingList(name, user_id) {
   // TODO: figure out how to get the user in there
   const result = await db.query(
-    'INSERT iNTO shopping_lists (sl_name, user_id) VALUES(?, ?)',
+    'INSERT INTO shopping_lists (sl_name, user_id) VALUES(?, ?)',
     [name, user_id]
   )
   return result

@@ -8,6 +8,7 @@ import {
   createShoppingItem,
   deleteShoppingItem,
   updateShoppingItem,
+  getShoppingList,
 } from '../database.js'
 
 function validateShoppingItem(shoppingItem) {
@@ -16,26 +17,36 @@ function validateShoppingItem(shoppingItem) {
     name: Joi.string().required(),
     amount: Joi.number().integer().min(1),
     bought: Joi.boolean(),
+    shopping_list_id: Joi.number(),
   })
   const result = schema.validate(shoppingItem)
   return result
 }
 
 router.get('/', auth, async (req, res) => {
-  const shoppingItems = await getShoppingItems()
+  const shoppingItems = await getShoppingItems(req.body.shopping_list_id)
   res.send(shoppingItems)
 })
 
 router.post('/', auth, async (req, res) => {
   const result = validateShoppingItem(req.body)
   if (result.error) return res.status(400).send(result.error.details[0].message)
-  const { item_id = uuidv4(), name, amount } = req.body
-  const shoppingItem = await createShoppingItem(item_id, name, amount)
+  const { item_id = uuidv4(), name, amount, shopping_list_id } = req.body
+  const shoppingList = await getShoppingList(shopping_list_id, req.user.user_id)
+  if (!shoppingList) {
+    return res.status(404).send('Shopping list not found')
+  }
+  const shoppingItem = await createShoppingItem(
+    item_id,
+    name,
+    amount,
+    shopping_list_id
+  )
   res.status(201).send(shoppingItem)
 })
 
 router.put('/:id', auth, async (req, res) => {
-  const shoppingItems = await getShoppingItems()
+  const shoppingItems = await getShoppingItems(req.body.shopping_list_id)
   const shoppingItem = shoppingItems.find(
     (item) => item.item_id === req.params.id
   )

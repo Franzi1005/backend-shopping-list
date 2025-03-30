@@ -5,7 +5,11 @@ meta {
 }
 
 delete {
-  url: http://localhost:5000/api/shoppingLists/1
-  body: none
+  url: http://localhost:5000/api/shoppingLists/2
+  body: json
   auth: none
+}
+
+headers {
+  x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NDI3Mzc1MTR9.vZ2lqJJhJyKT6kgM221O9MbSLNgRKoO6UtWEcR0wrpQ
 }
