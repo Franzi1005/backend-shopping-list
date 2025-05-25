@@ -6,8 +6,10 @@ import auth from './routes/auth.js'
 import shoppingLists from './routes/shoppingLists.js'
 
 const app = express()
-app.use(cors())
 app.use(express.json())
+
+app.use(cors())
+
 app.use('/api/shoppingItems', shoppingItems)
 app.use('/api/users', users)
 app.use('/api/auth', auth)

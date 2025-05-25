@@ -85,7 +85,7 @@ export async function getShoppingLists(user_id) {
   const [rows] = await db.query(
     'SELECT * FROM shopping_lists WHERE user_id = ?',
     [user_id]
-  )
+  ) // TODO: WHERE user_id = user_id or something
   return rows
 }
 
