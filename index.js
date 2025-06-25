@@ -8,8 +8,10 @@ import shoppingLists from './routes/shoppingLists.js'
 const app = express()
 app.use(express.json())
 
-app.use(cors())
-
+const corsOptions = {
+  exposedHeaders: ['x-auth-token'],
+}
+app.use(cors(corsOptions))
 app.use('/api/shoppingItems', shoppingItems)
 app.use('/api/users', users)
 app.use('/api/auth', auth)

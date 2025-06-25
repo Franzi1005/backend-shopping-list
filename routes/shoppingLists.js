@@ -9,7 +9,6 @@ import {
   createShoppingList,
   deleteShoppingList,
   updateShoppingList,
-  getUser,
 } from '../database.js'
 
 function validateShoppingList(shoppingList) {

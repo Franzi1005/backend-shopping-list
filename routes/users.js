@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
     )
     res.header('x-auth-token', token).status(201).send(newUser)
   } catch (error) {
-    res.status(400).send(error.message)
+    res.status(409).send(error.message)
   }
 })
 

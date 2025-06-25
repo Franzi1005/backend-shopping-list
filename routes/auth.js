@@ -20,13 +20,13 @@ function validateAuth(req) {
 router.post('/', async (req, res) => {
   const loginAttempt = validateAuth(req.body)
   if (loginAttempt.error) {
-    return res.status(400).send('Invalid email or password')
+    return res.status(401).send('Invalid email or password')
   } else {
     const user = await getUserByEmail(req.body.email)
-    if (!user) return res.status(404).send('Invalid email or password')
+    if (!user) return res.status(401).send('Invalid email or password')
 
     const password = await bcrypt.compare(req.body.password, user[0].password)
-    if (!password) return res.status(404).send('Invalid email or password')
+    if (!password) return res.status(401).send('Invalid email or password')
 
     const token = jwt.sign({ user_id: user[0].user_id }, process.env.JWT_SECRET)
 
