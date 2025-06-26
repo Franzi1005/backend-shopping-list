@@ -24,7 +24,7 @@ function validateShoppingItem(shoppingItem) {
 }
 
 router.get('/', auth, async (req, res) => {
-  const shoppingItems = await getShoppingItems(req.body.shopping_list_id)
+  const shoppingItems = await getShoppingItems(req.query.shopping_list_id)
   res.send(shoppingItems)
 })
 

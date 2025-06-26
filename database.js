@@ -85,12 +85,11 @@ export async function getShoppingLists(user_id) {
   const [rows] = await db.query(
     'SELECT * FROM shopping_lists WHERE user_id = ?',
     [user_id]
-  ) // TODO: WHERE user_id = user_id or something
+  )
   return rows
 }
 
 export async function createShoppingList(name, user_id) {
-  // TODO: figure out how to get the user in there
   const result = await db.query(
     'INSERT INTO shopping_lists (sl_name, user_id) VALUES(?, ?)',
     [name, user_id]
