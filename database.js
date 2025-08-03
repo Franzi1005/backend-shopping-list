@@ -58,14 +58,22 @@ export async function createUser(name, password, email) {
       'INSERT INTO users (user_name, password, email) VALUES(?, ?, ?)',
       [name, password, email]
     )
-    return result
+    return {
+    user_id: result[0].insertId,
+    user_name: name,
+    email: email
+  }
+}}
+
+export async function getUserByEmail(email) {
+  try {const user = await db.query('SELECT * FROM users WHERE email = ?', [email])
+  return user[0].length > 0 ? user[0] : null}
+  catch (err) {console.error('DB query failed in getUserByEmail:', err)
+    throw err
   }
 }
 
-export async function getUserByEmail(email) {
-  const user = await db.query('SELECT * FROM users WHERE email = ?', [email])
-  return user[0].length > 0 ? user[0] : null
-}
+
 
 export async function getUser(id) {
   const user = await db.query('SELECT * FROM users WHERE user_id = ?', [id])

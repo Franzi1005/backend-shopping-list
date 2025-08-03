@@ -36,11 +36,12 @@ router.post('/', async (req, res) => {
   try {
     const newUser = await createUser(userName, hashedPassword, email)
     const token = jwt.sign(
-      { userId: newUser[0].user_id },
+      { userId: newUser.user_id },
       process.env.JWT_SECRET
     )
     res.header('x-auth-token', token).status(201).send(newUser)
   } catch (error) {
+    console.error("User creation failed:", error)
     res.status(409).send(error.message)
   }
 })
