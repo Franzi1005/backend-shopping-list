@@ -12,7 +12,7 @@ const corsOptions = {
   exposedHeaders: ['x-auth-token'],
 }
 app.use(cors(corsOptions))
-app.use('/api/shoppingItems', shoppingItems)
+app.use('/api/shoppingLists/', shoppingItems)
 app.use('/api/users', users)
 app.use('/api/auth', auth)
 app.use('/api/shoppingLists', shoppingLists)

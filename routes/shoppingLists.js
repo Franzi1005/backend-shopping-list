@@ -14,6 +14,8 @@ import {
 function validateShoppingList(shoppingList) {
   const schema = Joi.object({
     name: Joi.string().required(),
+    amount: Joi.string(),
+    shopping_list_id: Joi.string()
   })
   const result = schema.validate(shoppingList)
   return result
